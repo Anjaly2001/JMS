@@ -1,0 +1,39 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Manage Journals{% endblock %}
+{% block page_title %}Journals{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0"><i class="bi bi-journal-bookmark text-primary"></i> Journals</h4>
+  {% if current_role == 'admin' %}
+    <a href="{% url 'journal:journal_create' %}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add Journal</a>
+  {% endif %}
+</div>
+
+<div class="jms-card p-3">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead><tr><th>Title</th><th>ISSN</th><th>Editor</th><th>Status</th><th>Articles</th><th class="text-end">Actions</th></tr></thead>
+      <tbody>
+        {% for journal in journals %}
+          <tr>
+            <td><a href="{% url 'journal:journal_manage_detail' journal.pk %}">{{ journal.title }}</a></td>
+            <td>{{ journal.issn|default:"-" }}</td>
+            <td>{{ journal.editor.get_full_name|default:journal.editor.username|default:"-" }}</td>
+            <td>{% if journal.is_active %}<span class="badge bg-success">Active</span>{% else %}<span class="badge bg-secondary">Inactive</span>{% endif %}</td>
+            <td>{{ journal.published_article_count }}</td>
+            <td class="text-end">
+              {% if current_role == 'admin' %}
+                <a href="{% url 'journal:journal_update' journal.pk %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
+                <a href="{% url 'journal:journal_delete' journal.pk %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+              {% endif %}
+              <a href="{% url 'journal:journal_manage_detail' journal.pk %}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye"></i></a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="6" class="text-center text-muted">No journals yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

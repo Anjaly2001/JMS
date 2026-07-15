@@ -1,0 +1,64 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Manage Users{% endblock %}
+{% block page_title %}Users{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0"><i class="bi bi-people text-primary"></i> All Users</h4>
+  <a href="{% url 'accounts:user_create' %}" class="btn btn-primary"><i class="bi bi-person-plus"></i> Add User</a>
+</div>
+
+<div class="jms-card p-3">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Joined</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+          <tr>
+            <td>{{ u.get_full_name|default:"-" }}</td>
+            <td>{{ u.username }}</td>
+            <td>{{ u.email }}</td>
+            <td>
+              {% if u.profile %}
+                <span class="badge bg-primary">{{ u.profile.get_role_display }}</span>
+              {% else %}
+                <span class="badge bg-secondary">No Profile</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if u.is_active %}
+                <span class="badge bg-success">Active</span>
+              {% else %}
+                <span class="badge bg-danger">Inactive</span>
+              {% endif %}
+            </td>
+            <td>{{ u.date_joined|date:"d M Y" }}</td>
+            <td class="text-end">
+              {% if u.profile %}
+                <a href="{% url 'accounts:user_role_update' u.pk %}" class="btn btn-sm btn-outline-primary" title="Change Role"><i class="bi bi-pencil-square"></i></a>
+              {% endif %}
+              <form action="{% url 'accounts:user_toggle_active' u.pk %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-secondary" title="Activate / Deactivate">
+                  <i class="bi bi-power"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="7" class="text-center text-muted">No users found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

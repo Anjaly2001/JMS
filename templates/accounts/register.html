@@ -1,0 +1,56 @@
+{% extends 'base_public.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="jms-card p-4">
+      <h3 class="mb-3 text-center"><i class="bi bi-person-plus text-primary"></i> Create an Author Account</h3>
+      <p class="text-muted text-center small">Editor, Reviewer, and Administrator accounts are created by an Administrator.</p>
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">First Name <span class="text-danger">*</span></label>
+            {{ form.first_name }}
+            {{ form.first_name.errors }}
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Last Name <span class="text-danger">*</span></label>
+            {{ form.last_name }}
+            {{ form.last_name.errors }}
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Username <span class="text-danger">*</span></label>
+          {{ form.username }}
+          {{ form.username.errors }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email <span class="text-danger">*</span></label>
+          {{ form.email }}
+          {{ form.email.errors }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Affiliation</label>
+          {{ form.affiliation }}
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Password <span class="text-danger">*</span></label>
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100"><i class="bi bi-check-circle"></i> Register</button>
+      </form>
+      <p class="text-center small mt-3 mb-0">Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

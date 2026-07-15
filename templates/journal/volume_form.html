@@ -1,0 +1,20 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Add Volume{% endblock %}
+{% block page_title %}Add Volume - {{ journal.title }}{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width:500px;">
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Volume Number</label>
+      {{ form.number }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Year</label>
+      {{ form.year }}
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Volume</button>
+    <a href="{% url 'journal:journal_manage_detail' journal.pk %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

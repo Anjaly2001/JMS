@@ -1,0 +1,83 @@
+{% extends 'base_dashboard.html' %}
+{% load core_extras %}
+{% block title %}Administrator Dashboard{% endblock %}
+{% block page_title %}Administrator Dashboard{% endblock %}
+{% block content %}
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="jms-card jms-stat-card p-3 text-center">
+      <i class="bi bi-people fs-3 text-primary"></i>
+      <div class="display-6">{{ total_users }}</div>
+      <div class="text-muted small">Total Users</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="jms-card jms-stat-card p-3 text-center">
+      <i class="bi bi-journal-bookmark fs-3 text-primary"></i>
+      <div class="display-6">{{ total_journals }}</div>
+      <div class="text-muted small">Total Journals</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="jms-card jms-stat-card p-3 text-center">
+      <i class="bi bi-file-earmark-text fs-3 text-primary"></i>
+      <div class="display-6">{{ total_manuscripts }}</div>
+      <div class="text-muted small">Total Manuscripts</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="jms-card jms-stat-card p-3 text-center">
+      <i class="bi bi-pencil-square fs-3 text-primary"></i>
+      <div class="display-6">{{ total_reviews }}</div>
+      <div class="text-muted small">Total Reviews</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="jms-card jms-stat-card p-3 text-center">
+      <i class="bi bi-book fs-3 text-primary"></i>
+      <div class="display-6">{{ published_articles }}</div>
+      <div class="text-muted small">Published Articles</div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-primary w-100 py-3"><i class="bi bi-people d-block fs-4 mb-1"></i> Manage Users</a>
+  </div>
+  <div class="col-md-3">
+    <a href="{% url 'accounts:role_settings' %}" class="btn btn-outline-primary w-100 py-3"><i class="bi bi-person-gear d-block fs-4 mb-1"></i> Role Settings</a>
+  </div>
+  <div class="col-md-3">
+    <a href="{% url 'journal:journal_manage_list' %}" class="btn btn-outline-primary w-100 py-3"><i class="bi bi-journal-bookmark d-block fs-4 mb-1"></i> Manage Journals</a>
+  </div>
+  <div class="col-md-3">
+    <a href="{% url 'core:reports' %}" class="btn btn-outline-primary w-100 py-3"><i class="bi bi-bar-chart d-block fs-4 mb-1"></i> Reports</a>
+  </div>
+  <div class="col-md-3">
+    <a href="/admin/" class="btn btn-outline-primary w-100 py-3"><i class="bi bi-gear d-block fs-4 mb-1"></i> Settings (Admin Panel)</a>
+  </div>
+</div>
+
+<div class="jms-card p-3">
+  <h5 class="mb-3">Recent Submissions</h5>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead><tr><th>ID</th><th>Title</th><th>Journal</th><th>Status</th></tr></thead>
+      <tbody>
+        {% for s in recent_submissions %}
+          <tr>
+            <td><a href="{% url 'journal:submission_detail' s.pk %}">{{ s.submission_id }}</a></td>
+            <td>{{ s.title|truncatechars:50 }}</td>
+            <td>{{ s.journal.title }}</td>
+            <td><span class="badge bg-{{ s.status|status_badge }}">{{ s.get_status_display }}</span></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4" class="text-center text-muted">No submissions yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

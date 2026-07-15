@@ -1,0 +1,46 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Submit Manuscript{% endblock %}
+{% block page_title %}Submit Manuscript{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width:750px;">
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="mb-3">
+      <label class="form-label">Journal <span class="text-danger">*</span></label>
+      {{ form.journal }}
+      {{ form.journal.errors }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Title <span class="text-danger">*</span></label>
+      {{ form.title }}
+      {{ form.title.errors }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Abstract <span class="text-danger">*</span></label>
+      {{ form.abstract }}
+      {{ form.abstract.errors }}
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Keywords <span class="text-danger">*</span></label>
+        {{ form.keywords }}
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Subject Area <span class="text-danger">*</span></label>
+        {{ form.subject_area }}
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Co-authors</label>
+      {{ form.co_authors }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Manuscript File (PDF/DOC/DOCX, max 5 MB) <span class="text-danger">*</span></label>
+      {{ form.manuscript_file }}
+      {{ form.manuscript_file.errors }}
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> Submit Manuscript</button>
+  </form>
+</div>
+{% endblock %}

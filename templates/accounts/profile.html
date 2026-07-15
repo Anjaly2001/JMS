@@ -1,0 +1,55 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}My Profile{% endblock %}
+{% block page_title %}My Profile{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="jms-card p-4">
+      <div class="text-center mb-4">
+        {% if user.profile.photo %}
+          <img src="{{ user.profile.photo.url }}" class="rounded-circle" width="96" height="96" style="object-fit:cover;">
+        {% else %}
+          <i class="bi bi-person-circle text-primary" style="font-size:6rem;"></i>
+        {% endif %}
+        <h5 class="mt-2 mb-0">{{ user.get_full_name|default:user.username }}</h5>
+        <span class="badge bg-primary">{{ user.profile.get_role_display }}</span>
+      </div>
+      <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">First Name</label>
+            {{ user_form.first_name }}
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Last Name</label>
+            {{ user_form.last_name }}
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          {{ user_form.email }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Role</label>
+          {{ profile_form.role }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Affiliation</label>
+          {{ profile_form.affiliation }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Phone</label>
+          {{ profile_form.phone }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Profile Photo</label>
+          {{ profile_form.photo }}
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Changes</button>
+        <a href="{% url 'accounts:password_change' %}" class="btn btn-outline-secondary"><i class="bi bi-key"></i> Change Password</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

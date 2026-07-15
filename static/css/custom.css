@@ -1,0 +1,230 @@
+/* ------------------------------------------------------------------
+   Journal Management System - custom theme
+   Blue & White theme inspired by a university's brand colours.
+   ------------------------------------------------------------------ */
+
+:root {
+  --jms-primary: #003B7A;
+  --jms-primary-light: #1a5fa3;
+  --jms-sidebar-bg: #052c52;
+  --jms-sidebar-hover: #0a4e8f;
+  --jms-bg: #f5f7fa;
+  --jms-card-bg: #ffffff;
+  --jms-text: #333333;
+  --jms-border-radius: 0.6rem;
+}
+
+body {
+  background-color: var(--jms-bg);
+  color: var(--jms-text);
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body > .d-flex,
+body > .container,
+body > main {
+  width: 100%;
+}
+
+/* ---------- Public navbar ---------- */
+.jms-navbar {
+  background-color: var(--jms-primary);
+}
+.jms-navbar .navbar-brand,
+.jms-navbar .nav-link {
+  color: #ffffff !important;
+}
+.jms-navbar .nav-link:hover {
+  color: #cfe3fb !important;
+}
+
+/* ---------- Hero banner ---------- */
+.jms-hero {
+  background: linear-gradient(135deg, var(--jms-primary) 0%, var(--jms-primary-light) 100%);
+  color: #fff;
+  padding: 4rem 1rem;
+  border-radius: var(--jms-border-radius);
+}
+
+/* ---------- Sidebar (authenticated layout) ---------- */
+.jms-sidebar {
+  background-color: var(--jms-sidebar-bg);
+  min-height: 100vh;
+  width: 250px;
+  flex-shrink: 0;
+}
+.jms-sidebar .nav-link {
+  background-color: transparent;
+  color: #e7eef7;
+  border-radius: var(--jms-border-radius);
+  margin: 0.4rem 0.75rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+.jms-sidebar .nav-link i {
+  width: 1.4rem;
+  text-align: center;
+  margin-right: 0.5rem;
+}
+.jms-sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  box-shadow: none;
+  transform: none;
+}
+.jms-sidebar .nav-link.active {
+  background-color: #ffffff !important;
+  color: var(--jms-primary) !important;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(0, 59, 122, 0.24);
+  box-shadow: 0 10px 30px rgba(0, 59, 122, 0.1);
+}
+.jms-sidebar .nav-link.active:hover {
+  background-color: #ffffff !important;
+  color: var(--jms-primary) !important;
+}
+.jms-navbar .nav-link.active {
+  box-shadow: 0 4px 12px rgba(0, 59, 122, 0.1);
+}
+.jms-sidebar-brand {
+  color: #fff;
+  padding: 1rem;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ---------- Topbar (authenticated layout) ---------- */
+.jms-topbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e3e8ee;
+  padding: 0.75rem 1.25rem;
+}
+
+.dashboard-heading {
+  font-size: 1.55rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--jms-primary);
+  line-height: 1.1;
+}
+
+.dashboard-heading::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 4px;
+  margin-top: 0.5rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--jms-primary), var(--jms-primary-light));
+}
+
+/* ---------- Cards ---------- */
+.jms-card {
+  background-color: var(--jms-card-bg);
+  border-radius: var(--jms-border-radius);
+  border: 1px solid #e3e8ee;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.jms-stat-card .display-6 {
+  color: var(--jms-primary);
+  font-weight: 700;
+}
+
+.journal-header {
+  background-color: #ffffff;
+}
+.journal-header-image {
+  min-height: 280px;
+}
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.journal-volume-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.journal-volume-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.journal-article-card {
+  transition: background-color 0.2s ease;
+}
+.journal-article-card:hover {
+  background-color: rgba(0, 59, 122, 0.04);
+}
+
+.jms-featured-section {
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(227,232,238,0.8);
+  border-radius: calc(var(--jms-border-radius) * 1.2);
+}
+
+.featured-journal-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: none;
+  overflow: hidden;
+}
+.featured-journal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+.featured-journal-image {
+  height: 220px;
+  overflow: hidden;
+}
+.featured-journal-image img,
+.featured-journal-image .bg-light {
+  min-height: 220px;
+}
+.object-fit-cover {
+  object-fit: cover;
+  height: 100%;
+}
+
+.featured-journal-body {
+  background-color: #ffffff;
+}
+.featured-journal-body h5 a:hover {
+  color: var(--jms-primary);
+}
+.featured-journal-body .stretched-link::after {
+  position: absolute;
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+  background-color: var(--jms-primary);
+  border-color: var(--jms-primary);
+}
+.btn-primary:hover {
+  background-color: var(--jms-primary-light);
+  border-color: var(--jms-primary-light);
+}
+
+/* ---------- Footer ---------- */
+.jms-footer {
+  background-color: var(--jms-sidebar-bg);
+  color: #e7eef7;
+  padding: 1.5rem 0;
+  margin-top: auto;
+  width: 100%;
+}
+.jms-footer a {
+  color: #cfe3fb;
+}
+
+/* ---------- Misc ---------- */
+.jms-journal-cover {
+  height: 160px;
+  object-fit: cover;
+  border-radius: var(--jms-border-radius) var(--jms-border-radius) 0 0;
+}

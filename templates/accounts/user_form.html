@@ -1,0 +1,49 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Add User{% endblock %}
+{% block page_title %}Add User{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width: 600px;">
+  <h5 class="mb-3">Create Editor / Reviewer / Administrator Account</h5>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">First Name</label>
+        {{ form.first_name }}
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Last Name</label>
+        {{ form.last_name }}
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      {{ form.username }}
+      {{ form.username.errors }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      {{ form.email }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Role</label>
+      {{ form.role }}
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Password</label>
+        {{ form.password1 }}
+        {{ form.password1.errors }}
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Confirm Password</label>
+        {{ form.password2 }}
+        {{ form.password2.errors }}
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Create Account</button>
+    <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

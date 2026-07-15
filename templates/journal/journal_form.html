@@ -1,0 +1,37 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width:700px;">
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Title <span class="text-danger">*</span></label>
+      {{ form.title }}
+      {{ form.title.errors }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">ISSN</label>
+      {{ form.issn }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      {{ form.description }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Cover Image</label>
+      {{ form.cover_image }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Assigned Editor</label>
+      {{ form.editor }}
+    </div>
+    <div class="form-check mb-3">
+      {{ form.is_active }}
+      <label class="form-check-label">Active (visible to the public)</label>
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Journal</button>
+    <a href="{% url 'journal:journal_manage_list' %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

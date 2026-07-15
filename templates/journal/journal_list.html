@@ -1,0 +1,27 @@
+{% extends 'base_public.html' %}
+{% block title %}Journals{% endblock %}
+{% block content %}
+<h3 class="mb-4"><i class="bi bi-journal-bookmark text-primary"></i> Journals</h3>
+<div class="row g-3">
+  {% for journal in journals %}
+    <div class="col-sm-6 col-lg-4">
+      <div class="jms-card h-100">
+        {% if journal.cover_image %}
+          <img src="{{ journal.cover_image.url }}" class="jms-journal-cover w-100" alt="{{ journal.title }}">
+        {% else %}
+          <div class="jms-journal-cover w-100 d-flex align-items-center justify-content-center bg-light">
+            <i class="bi bi-journal-bookmark text-primary" style="font-size: 3rem;"></i>
+          </div>
+        {% endif %}
+        <div class="p-3">
+          <h5><a href="{% url 'journal:journal_detail' journal.pk %}" class="text-decoration-none">{{ journal.title }}</a></h5>
+          {% if journal.issn %}<p class="text-muted small mb-1">ISSN: {{ journal.issn }}</p>{% endif %}
+          <p class="text-muted small mb-0">{{ journal.description|truncatewords:18 }}</p>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-muted">No journals published yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

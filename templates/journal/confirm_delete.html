@@ -1,0 +1,13 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Confirm Delete{% endblock %}
+{% block page_title %}Confirm Delete{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width:500px;">
+  <p>Are you sure you want to delete the {{ type_label }} "<strong>{{ object }}</strong>"? This cannot be undone.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</button>
+    <a href="{% url 'journal:journal_manage_list' %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

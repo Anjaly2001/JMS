@@ -1,0 +1,31 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}{{ journal.title }}{% endblock %}
+{% block page_title %}{{ journal.title }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0">{{ journal.title }}</h4>
+  <a href="{% url 'journal:volume_create' journal.pk %}" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> Add Volume</a>
+</div>
+
+{% for volume in volumes %}
+  <div class="jms-card p-3 mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h6 class="mb-0">Volume {{ volume.number }} ({{ volume.year }})</h6>
+      <a href="{% url 'journal:issue_create' volume.pk %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-plus-circle"></i> Add Issue</a>
+    </div>
+    <ul class="list-unstyled mb-0">
+      {% for issue in volume.issues.all %}
+        <li>
+          <i class="bi bi-file-earmark-text me-1"></i> Issue {{ issue.issue_number }}
+          {% if issue.publish_date %} &middot; {{ issue.publish_date|date:"d M Y" }}{% endif %}
+          {% if issue.is_published %}<span class="badge bg-success ms-1">Published</span>{% else %}<span class="badge bg-secondary ms-1">Unpublished</span>{% endif %}
+        </li>
+      {% empty %}
+        <li class="text-muted">No issues yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% empty %}
+  <p class="text-muted">No volumes yet. Add one to get started.</p>
+{% endfor %}
+{% endblock %}

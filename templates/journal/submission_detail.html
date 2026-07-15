@@ -1,0 +1,84 @@
+{% extends 'base_dashboard.html' %}
+{% load core_extras %}
+{% block title %}{{ submission.title }}{% endblock %}
+{% block page_title %}Submission Detail{% endblock %}
+{% block content %}
+
+<div class="jms-card p-4 mb-3">
+  <div class="d-flex justify-content-between align-items-start flex-wrap">
+    <div>
+      <h4>{{ submission.title }}</h4>
+      <p class="text-muted mb-1">{{ submission.submission_id }} &middot; {{ submission.journal.title }} &middot; Version {{ submission.version_number }}</p>
+      <span class="badge bg-{{ submission.status|status_badge }} fs-6">{{ submission.get_status_display }}</span>
+    </div>
+    <div class="text-end mt-2 mt-md-0">
+      <a href="{{ submission.manuscript_file.url }}" class="btn btn-outline-primary"><i class="bi bi-download"></i> Download Manuscript</a>
+    </div>
+  </div>
+
+  <hr>
+  <p><strong>Abstract:</strong> {{ submission.abstract }}</p>
+  <p class="mb-1"><strong>Keywords:</strong>
+    {% for kw in submission.keyword_list %}<span class="badge bg-light text-dark border me-1">{{ kw }}</span>{% endfor %}
+  </p>
+  <p class="mb-1"><strong>Subject Area:</strong> {{ submission.subject_area }}</p>
+  <p class="mb-1"><strong>Corresponding Author:</strong> {{ submission.corresponding_author.get_full_name|default:submission.corresponding_author.username }}</p>
+  {% if submission.co_authors %}<p class="mb-1"><strong>Co-authors:</strong> {{ submission.co_authors }}</p>{% endif %}
+  <p class="mb-0"><strong>Submitted:</strong> {{ submission.submission_date|date:"d M Y, h:i A" }}</p>
+  {% if submission.editor_decision_comment %}
+    <div class="alert alert-info mt-3 mb-0"><strong>Editor's comment:</strong> {{ submission.editor_decision_comment }}</div>
+  {% endif %}
+</div>
+
+{% if is_owner and submission.status == 'revision_requested' %}
+  <div class="jms-card p-3 mb-3">
+    <a href="{% url 'journal:submission_upload_revision' submission.pk %}" class="btn btn-warning"><i class="bi bi-upload"></i> Upload Revised Manuscript</a>
+  </div>
+{% endif %}
+
+{% if my_review %}
+  <div class="jms-card p-3 mb-3">
+    <h6>My Review</h6>
+    <p class="mb-1">Status: <span class="badge bg-{{ my_review.status|status_badge }}">{{ my_review.get_status_display }}</span></p>
+    {% if my_review.status == 'pending' %}
+      <a href="{% url 'journal:review_respond' my_review.pk 'accept' %}" class="btn btn-sm btn-success">Accept Invitation</a>
+      <a href="{% url 'journal:review_respond' my_review.pk 'decline' %}" class="btn btn-sm btn-outline-danger">Decline Invitation</a>
+    {% elif my_review.status == 'accepted' %}
+      <a href="{% url 'journal:review_submit' my_review.pk %}" class="btn btn-sm btn-primary">Submit Review</a>
+    {% elif my_review.status == 'completed' %}
+      <p class="mb-1"><strong>Recommendation:</strong> {{ my_review.get_recommendation_display }}</p>
+      <p class="mb-0"><strong>Comments to Author:</strong> {{ my_review.comments_to_author }}</p>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% if can_manage %}
+  <div class="jms-card p-3 mb-3">
+    <h6>Editorial Actions</h6>
+    <a href="{% url 'journal:assign_reviewer' submission.pk %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-person-plus"></i> Assign Reviewer</a>
+    <a href="{% url 'journal:editorial_decision' submission.pk %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-clipboard-check"></i> Record Decision</a>
+    {% if submission.status == 'accepted' %}
+      <a href="{% url 'journal:publish_submission' submission.pk %}" class="btn btn-sm btn-success"><i class="bi bi-book"></i> Publish</a>
+    {% endif %}
+  </div>
+
+  {% if reviews %}
+    <div class="jms-card p-3">
+      <h6>Reviews</h6>
+      <table class="table table-sm">
+        <thead><tr><th>Reviewer</th><th>Status</th><th>Recommendation</th><th>Comments</th></tr></thead>
+        <tbody>
+          {% for r in reviews %}
+            <tr>
+              <td>{{ r.reviewer.get_full_name|default:r.reviewer.username }}</td>
+              <td><span class="badge bg-{{ r.status|status_badge }}">{{ r.get_status_display }}</span></td>
+              <td>{{ r.get_recommendation_display|default:"-" }}</td>
+              <td>{{ r.comments_to_author|default:"-"|truncatewords:15 }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+{% endif %}
+{% endblock %}

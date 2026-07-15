@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg jms-navbar sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{% url 'core:home' %}">
+      <i class="bi bi-journal-bookmark-fill me-1"></i> JMS
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      {% with request.resolver_match.url_name as current_url %}
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link {% if current_url == 'home' %}active{% endif %}" href="{% url 'core:home' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link {% if current_url == 'journal_list' %}active{% endif %}" href="{% url 'journal:journal_list' %}">Journals</a></li>
+        <li class="nav-item"><a class="nav-link {% if current_url == 'publication_list' %}active{% endif %}" href="{% url 'journal:publication_list' %}">Articles</a></li>
+        <li class="nav-item"><a class="nav-link {% if current_url == 'home' %}active{% endif %}" href="{% url 'core:home' %}#about">About</a></li>
+        <li class="nav-item"><a class="nav-link {% if current_url == 'home' %}active{% endif %}" href="{% url 'core:home' %}#contact">Contact</a></li>
+      </ul>
+      <form class="d-flex me-2" role="search" action="{% url 'core:search' %}" method="get">
+        <input class="form-control form-control-sm me-2" type="search" name="q" placeholder="Search journals, articles, authors" value="{{ request.GET.q }}">
+        <button class="btn btn-sm btn-light" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link {% if current_url == 'dashboard' or current_url == 'dashboard_admin' or current_url == 'dashboard_editor' or current_url == 'dashboard_reviewer' or current_url == 'dashboard_author' %}active{% endif %}" href="{% url 'core:dashboard' %}"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link {% if current_url == 'login' %}active{% endif %}" href="{% url 'accounts:login' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a></li>
+          <li class="nav-item"><a class="nav-link {% if current_url == 'register' %}active{% endif %}" href="{% url 'accounts:register' %}"><i class="bi bi-person-plus"></i> Register</a></li>
+        {% endif %}
+      </ul>
+      {% endwith %}
+    </div>
+  </div>
+</nav>

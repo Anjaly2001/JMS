@@ -1,0 +1,17 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Change Role{% endblock %}
+{% block page_title %}Change Role{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width: 500px;">
+  <h5 class="mb-3">Change Role for {{ target_user.username }}</h5>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Role</label>
+      {{ form.role }}
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Update Role</button>
+    <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

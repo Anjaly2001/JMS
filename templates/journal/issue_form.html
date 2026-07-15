@@ -1,0 +1,24 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Add Issue{% endblock %}
+{% block page_title %}Add Issue - {{ volume }}{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width:500px;">
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Issue Number</label>
+      {{ form.issue_number }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Publish Date</label>
+      {{ form.publish_date }}
+    </div>
+    <div class="form-check mb-3">
+      {{ form.is_published }}
+      <label class="form-check-label">Published</label>
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Issue</button>
+    <a href="{% url 'journal:journal_manage_detail' volume.journal.pk %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

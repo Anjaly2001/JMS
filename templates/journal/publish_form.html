@@ -1,0 +1,22 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Publish Submission{% endblock %}
+{% block page_title %}Publish Submission{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width:600px;">
+  <p class="text-muted">Submission: {{ submission.title }} ({{ submission.submission_id }})</p>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Assign to Issue (optional)</label>
+      <select name="issue" class="form-select">
+        <option value="">-- No issue --</option>
+        {% for issue in issues %}
+          <option value="{{ issue.pk }}">{{ issue }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success"><i class="bi bi-book"></i> Publish Now</button>
+    <a href="{% url 'journal:submission_detail' submission.pk %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

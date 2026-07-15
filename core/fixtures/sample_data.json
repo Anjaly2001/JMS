@@ -1,0 +1,183 @@
+[
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$720000$OMDT9k5PBZ0P5nWhzaDgCr$ES6AP7t3rGj4QA3TNXRDhJhuOYYJd8jtGcGu5nkvCQ8=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@university.edu",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-07-13T11:56:25.782Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$720000$lTKdeEX2nrPXQQnkUDrXCS$mn0ZAvRDW/29fqko4KQk343yra45vJydn+ZaiOphVLg=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "editor1",
+    "first_name": "Priya",
+    "last_name": "Sharma",
+    "email": "editor1@university.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-13T11:56:26.224Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$720000$DKHro1IjFJ1iqznab7tbeX$vktlO+DaSvBr0BK4TCGz7raRdP0xqyQQy1qf1d7k1Ak=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "reviewer1",
+    "first_name": "Arjun",
+    "last_name": "Rao",
+    "email": "reviewer1@university.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-13T11:56:26.670Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$720000$JjGNjqsxHUWukvOg6ydj8e$FV2eSfJywLISeektNXBx4oG9t7f+KTc3Thd/oFIb1mo=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "author1",
+    "first_name": "Meera",
+    "last_name": "Nair",
+    "email": "author1@university.edu",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-13T11:56:27.098Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "admin"
+    ],
+    "role": "admin",
+    "affiliation": "IT Services",
+    "phone": "",
+    "photo": "",
+    "created_at": "2026-07-13T11:56:26.220Z"
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "editor1"
+    ],
+    "role": "editor",
+    "affiliation": "Dept. of Computer Science",
+    "phone": "",
+    "photo": "",
+    "created_at": "2026-07-13T11:56:26.666Z"
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "reviewer1"
+    ],
+    "role": "reviewer",
+    "affiliation": "Dept. of Electronics",
+    "phone": "",
+    "photo": "",
+    "created_at": "2026-07-13T11:56:27.095Z"
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "author1"
+    ],
+    "role": "author",
+    "affiliation": "Research Scholar",
+    "phone": "",
+    "photo": "",
+    "created_at": "2026-07-13T11:56:27.519Z"
+  }
+},
+{
+  "model": "journal.journal",
+  "pk": 1,
+  "fields": {
+    "title": "Journal of Computer Science",
+    "issn": "2456-1290",
+    "description": "A peer-reviewed journal covering AI, systems, and software engineering research.",
+    "cover_image": "",
+    "editor": [
+      "editor1"
+    ],
+    "is_active": true,
+    "created_at": "2026-07-13T11:56:27.524Z"
+  }
+},
+{
+  "model": "journal.volume",
+  "pk": 1,
+  "fields": {
+    "journal": 1,
+    "number": 1,
+    "year": 2026
+  }
+},
+{
+  "model": "journal.issue",
+  "pk": 1,
+  "fields": {
+    "volume": 1,
+    "issue_number": 1,
+    "publish_date": "2026-01-15",
+    "is_published": true
+  }
+},
+{
+  "model": "journal.submission",
+  "pk": 1,
+  "fields": {
+    "submission_id": "SUB-2026-00001",
+    "journal": 1,
+    "issue": 1,
+    "title": "Deep Learning for Academic Text Classification",
+    "abstract": "This paper explores transformer-based models for classifying academic manuscripts by subject area.",
+    "keywords": "deep learning, NLP, classification",
+    "subject_area": "Artificial Intelligence",
+    "co_authors": "",
+    "corresponding_author": [
+      "author1"
+    ],
+    "manuscript_file": "manuscripts/sample_manuscript.txt",
+    "version_number": 1,
+    "status": "published",
+    "editor_decision_comment": "",
+    "submission_date": "2026-07-13T11:56:27.537Z",
+    "updated_at": "2026-07-13T11:56:27.537Z"
+  }
+}
+]
