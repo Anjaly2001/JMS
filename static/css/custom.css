@@ -123,6 +123,50 @@ body > main {
   background: linear-gradient(90deg, var(--jms-primary), var(--jms-primary-light));
 }
 
+.submission-progress {
+  position: relative;
+  overflow: hidden;
+}
+.submission-progress .progress-line {
+  position: absolute;
+  top: 1.3rem;
+  left: 2.5rem;
+  right: 2.5rem;
+  height: 6px;
+  background-color: rgba(0, 59, 122, 0.12);
+  z-index: 0;
+}
+.submission-progress .progress-step {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+}
+.submission-progress .progress-step .progress-bullet {
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  margin: 0 auto 0.5rem;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid rgba(0, 59, 122, 0.16);
+  color: rgba(0, 59, 122, 0.7);
+  font-weight: 700;
+}
+.submission-progress .progress-step .step-label {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+.submission-progress .progress-step.active .progress-bullet {
+  border-color: var(--jms-primary);
+  color: var(--jms-primary);
+  box-shadow: 0 0 0 6px rgba(0, 59, 122, 0.08);
+}
+.submission-progress .progress-step.active .step-label {
+  color: var(--jms-primary);
+  font-weight: 700;
+}
+
 /* ---------- Cards ---------- */
 .jms-card {
   background-color: var(--jms-card-bg);
@@ -168,12 +212,13 @@ body > main {
 }
 
 .featured-journal-card {
+  position: relative;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   border: none;
   overflow: hidden;
 }
 .featured-journal-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   box-shadow: 0 12px 24px rgba(0,0,0,0.08);
 }
 
@@ -191,13 +236,20 @@ body > main {
 }
 
 .featured-journal-body {
+  position: relative;
   background-color: #ffffff;
+}
+.featured-journal-body h5 a {
+  position: relative;
+  z-index: 1;
 }
 .featured-journal-body h5 a:hover {
   color: var(--jms-primary);
 }
 .featured-journal-body .stretched-link::after {
   position: absolute;
+  inset: 0;
+  content: "";
 }
 
 /* ---------- Buttons ---------- */

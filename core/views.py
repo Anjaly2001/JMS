@@ -177,4 +177,7 @@ def export_submissions_csv(request):
 def notification_list(request):
     notifications = request.user.notifications.all()
     notifications.filter(is_read=False).update(is_read=True)
-    return render(request, 'core/notifications.html', {'notifications': notifications})
+    return render(request, 'core/notifications.html', {
+        'notifications': notifications,
+        'page_title': 'Notifications',
+    })

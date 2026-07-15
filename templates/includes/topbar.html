@@ -2,11 +2,7 @@
   <div class="d-flex align-items-center">
     <div>
       <h5 class="mb-0 fw-bold dashboard-heading">
-        {% if user.is_authenticated and user.profile and request.resolver_match.url_name in "dashboard_admin dashboard_editor dashboard_reviewer dashboard_author" %}
-          {{ user.profile.get_role_display }} Dashboard
-        {% else %}
-          {% block page_title %}{{ page_title|default:"Dashboard" }}{% endblock %}
-        {% endif %}
+        {% block page_title %}{{ page_title|default:"Dashboard" }}{% endblock %}
       </h5>
     </div>
   </div>
