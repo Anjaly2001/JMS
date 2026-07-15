@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
@@ -29,3 +30,8 @@ class AdminLoginTests(TestCase):
         response = self.client.post(reverse('accounts:admin_login'), {'username': 'authoruser', 'password': 'secret123'})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Only administrators can sign in here.')
+=======
+from django.test import TestCase
+
+# Create your tests here.
+>>>>>>> 6fbd5ab625782991d71a10edc3661e3dc19d8760

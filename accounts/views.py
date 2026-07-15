@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -140,3 +141,8 @@ def user_toggle_active(request, pk):
     state = 'activated' if target_user.is_active else 'deactivated'
     messages.success(request, f'Account for {target_user.username} was {state}.')
     return redirect('accounts:user_list')
+=======
+from django.shortcuts import render
+
+# Create your views here.
+>>>>>>> 6fbd5ab625782991d71a10edc3661e3dc19d8760

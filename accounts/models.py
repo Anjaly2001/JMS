@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -45,3 +46,8 @@ class Profile(models.Model):
             self.ROLE_REVIEWER: 'core:dashboard_reviewer',
             self.ROLE_AUTHOR: 'core:dashboard_author',
         }[self.role]
+=======
+from django.db import models
+
+# Create your models here.
+>>>>>>> 6fbd5ab625782991d71a10edc3661e3dc19d8760
