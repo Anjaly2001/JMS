@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Issue, Journal, Review, Submission, Volume
+from .models import Issue, Journal, Review, Submission, Volume, JournalCategory
 
 
 class VolumeInline(admin.TabularInline):
@@ -11,9 +11,10 @@ class VolumeInline(admin.TabularInline):
 @admin.register(Journal)
 class JournalAdmin(admin.ModelAdmin):
     list_display = ['title', 'issn', 'editor', 'is_active', 'created_at']
-    list_filter = ['is_active']
+    list_filter = ['is_active', 'categories']
     search_fields = ['title', 'issn']
     inlines = [VolumeInline]
+    filter_horizontal = ('categories',)
 
 
 class IssueInline(admin.TabularInline):
@@ -45,3 +46,9 @@ class SubmissionAdmin(admin.ModelAdmin):
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ['submission', 'reviewer', 'status', 'recommendation', 'due_date']
     list_filter = ['status', 'recommendation']
+
+
+@admin.register(JournalCategory)
+class JournalCategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug']
+    search_fields = ['name', 'slug']

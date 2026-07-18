@@ -6,13 +6,14 @@ from .models import Issue, Journal, Review, Submission, Volume
 class JournalForm(forms.ModelForm):
     class Meta:
         model = Journal
-        fields = ['title', 'issn', 'description', 'cover_image', 'editor', 'is_active']
+        fields = ['title', 'issn', 'description', 'cover_image', 'editor', 'is_active', 'categories']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'issn': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g. 2456-1290'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'cover_image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'editor': forms.Select(attrs={'class': 'form-select'}),
+            'categories': forms.SelectMultiple(attrs={'class': 'form-select', 'multiple': True}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 

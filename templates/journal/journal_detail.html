@@ -17,6 +17,13 @@
         <div>
           <h1 class="display-6 fw-bold mb-3">{{ journal.title }}</h1>
           <p class="text-muted mb-4">{% if journal.description %}{{ journal.description }}{% else %}A journal overview is not yet available. Please check back later for more information.{% endif %}</p>
+          {% if journal.categories.all %}
+            <p class="mb-2">
+              {% for cat in journal.categories.all %}
+                <span class="badge bg-secondary me-1">{{ cat.name }}</span>
+              {% endfor %}
+            </p>
+          {% endif %}
         </div>
         <div class="row text-muted small gy-2">
           {% if journal.issn %}

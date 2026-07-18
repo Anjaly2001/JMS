@@ -21,6 +21,22 @@ def validate_cover_image(value):
         raise ValidationError('Only JPG and PNG images are allowed for cover images.')
 
 
+class JournalCategory(models.Model):
+    """A simple category for grouping journals (e.g. Computer Science, Biology)."""
+
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=120, unique=True)
+    description = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name = 'Journal Category'
+        verbose_name_plural = 'Journal Categories'
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
 class Journal(models.Model):
     """A journal published by the institution (e.g. 'Journal of Computer Science')."""
 
@@ -38,6 +54,10 @@ class Journal(models.Model):
     )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    # Categories (e.g. Computer Science, Biology)
+    # Stored as a many-to-many relationship so a journal can belong to multiple categories.
+    categories = models.ManyToManyField('JournalCategory', blank=True, related_name='journals')
 
     class Meta:
         ordering = ['title']
