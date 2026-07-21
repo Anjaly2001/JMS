@@ -1,15 +1,5 @@
-{% extends 'base.html' %}
+{% extends 'base_public.html' %}
 {% block title %}{{ article.title }}{% endblock %}
-{% block page_title %}{{ article.title }}{% endblock %}
-{% block breadcrumbs %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb jms-breadcrumb">
-    {% if user.is_authenticated %}<li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>{% else %}<li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>{% endif %}
-    <li class="breadcrumb-item"><a href="{% url 'journal:publication_list' %}">Publications</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ article.title }}</li>
-  </ol>
-</nav>
-{% endblock %}
 {% block content %}
 <div class="jms-card p-4">
   <h2>{{ article.title }}</h2>

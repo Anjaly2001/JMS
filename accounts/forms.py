@@ -76,19 +76,13 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
-    """
-    Lets a logged-in user update their own profile details / photo.
-
-    Role is intentionally NOT editable here - changing a user's role must
-    only ever happen through the Administrator's user management pages
-    (accounts:user_role_update), so a user can never grant themselves a
-    higher-privilege role by editing their own profile.
-    """
+    """Lets a logged-in user update their profile details / photo."""
 
     class Meta:
         model = Profile
-        fields = ['affiliation', 'phone', 'photo']
+        fields = ['role', 'affiliation', 'phone', 'photo']
         widgets = {
+            'role': forms.Select(attrs={'class': 'form-select'}),
             'affiliation': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
             'photo': forms.ClearableFileInput(attrs={'class': 'form-control'}),

@@ -1,15 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base_dashboard.html' %}
 {% block title %}{{ title }}{% endblock %}
 {% block page_title %}{{ title }}{% endblock %}
-{% block breadcrumbs %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb jms-breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'journal:journal_manage_list' %}">Journals</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
-  </ol>
-</nav>
-{% endblock %}
 {% block content %}
 <div class="jms-card p-4" style="max-width:700px;">
   <form method="post" enctype="multipart/form-data" novalidate>

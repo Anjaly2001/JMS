@@ -2,7 +2,7 @@
 {
   "model": "auth.user",
   "fields": {
-    "password": "pbkdf2_sha256$720000$z7ujqVvDQtjh6jp8QvAs16$3+xrP4Vp2wHd9aV6k/ekgZeF0zRcx1NPRtC//Mgv3No=",
+    "password": "pbkdf2_sha256$720000$OMDT9k5PBZ0P5nWhzaDgCr$ES6AP7t3rGj4QA3TNXRDhJhuOYYJd8jtGcGu5nkvCQ8=",
     "last_login": null,
     "is_superuser": true,
     "username": "admin",
@@ -11,7 +11,7 @@
     "email": "admin@university.edu",
     "is_staff": true,
     "is_active": true,
-    "date_joined": "2026-07-20T10:19:04.375Z",
+    "date_joined": "2026-07-13T11:56:25.782Z",
     "groups": [],
     "user_permissions": []
   }
@@ -19,7 +19,7 @@
 {
   "model": "auth.user",
   "fields": {
-    "password": "pbkdf2_sha256$720000$vXTh9UdqJh60Rjjmm4xZJn$3TiMR1q8jwEELS/xNESO8hVPPoCsM2LHYCL1+HEbLBw=",
+    "password": "pbkdf2_sha256$720000$lTKdeEX2nrPXQQnkUDrXCS$mn0ZAvRDW/29fqko4KQk343yra45vJydn+ZaiOphVLg=",
     "last_login": null,
     "is_superuser": false,
     "username": "editor1",
@@ -28,7 +28,7 @@
     "email": "editor1@university.edu",
     "is_staff": false,
     "is_active": true,
-    "date_joined": "2026-07-20T10:19:04.601Z",
+    "date_joined": "2026-07-13T11:56:26.224Z",
     "groups": [],
     "user_permissions": []
   }
@@ -36,7 +36,7 @@
 {
   "model": "auth.user",
   "fields": {
-    "password": "pbkdf2_sha256$720000$fqSBU7x0xE720JK0SGUZlH$HEUmhQaBXXQ6wAelhzQA+rOBFLM2zEBggtSOdZ5uvm0=",
+    "password": "pbkdf2_sha256$720000$DKHro1IjFJ1iqznab7tbeX$vktlO+DaSvBr0BK4TCGz7raRdP0xqyQQy1qf1d7k1Ak=",
     "last_login": null,
     "is_superuser": false,
     "username": "reviewer1",
@@ -45,7 +45,7 @@
     "email": "reviewer1@university.edu",
     "is_staff": false,
     "is_active": true,
-    "date_joined": "2026-07-20T10:19:04.826Z",
+    "date_joined": "2026-07-13T11:56:26.670Z",
     "groups": [],
     "user_permissions": []
   }
@@ -53,7 +53,7 @@
 {
   "model": "auth.user",
   "fields": {
-    "password": "pbkdf2_sha256$720000$xw7otQ3Mrf0iybUq6BE7zc$/EhSPTI+mLxoshK1KI7MUY3zHIM79kPWXmQjWkgLyxg=",
+    "password": "pbkdf2_sha256$720000$JjGNjqsxHUWukvOg6ydj8e$FV2eSfJywLISeektNXBx4oG9t7f+KTc3Thd/oFIb1mo=",
     "last_login": null,
     "is_superuser": false,
     "username": "author1",
@@ -62,7 +62,7 @@
     "email": "author1@university.edu",
     "is_staff": false,
     "is_active": true,
-    "date_joined": "2026-07-20T10:19:05.052Z",
+    "date_joined": "2026-07-13T11:56:27.098Z",
     "groups": [],
     "user_permissions": []
   }
@@ -78,7 +78,7 @@
     "affiliation": "IT Services",
     "phone": "",
     "photo": "",
-    "created_at": "2026-07-20T10:19:04.596Z"
+    "created_at": "2026-07-13T11:56:26.220Z"
   }
 },
 {
@@ -92,7 +92,7 @@
     "affiliation": "Dept. of Computer Science",
     "phone": "",
     "photo": "",
-    "created_at": "2026-07-20T10:19:04.821Z"
+    "created_at": "2026-07-13T11:56:26.666Z"
   }
 },
 {
@@ -106,7 +106,7 @@
     "affiliation": "Dept. of Electronics",
     "phone": "",
     "photo": "",
-    "created_at": "2026-07-20T10:19:05.046Z"
+    "created_at": "2026-07-13T11:56:27.095Z"
   }
 },
 {
@@ -120,7 +120,7 @@
     "affiliation": "Research Scholar",
     "phone": "",
     "photo": "",
-    "created_at": "2026-07-20T10:19:05.271Z"
+    "created_at": "2026-07-13T11:56:27.519Z"
   }
 },
 {
@@ -135,8 +135,7 @@
       "editor1"
     ],
     "is_active": true,
-    "created_at": "2026-07-20T10:19:05.275Z",
-    "categories": []
+    "created_at": "2026-07-13T11:56:27.524Z"
   }
 },
 {
@@ -177,8 +176,8 @@
     "version_number": 1,
     "status": "published",
     "editor_decision_comment": "",
-    "submission_date": "2026-07-20T10:19:05.292Z",
-    "updated_at": "2026-07-20T10:19:05.292Z"
+    "submission_date": "2026-07-13T11:56:27.537Z",
+    "updated_at": "2026-07-13T11:56:27.537Z"
   }
 }
 ]

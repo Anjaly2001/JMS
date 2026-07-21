@@ -1,17 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'base_dashboard.html' %}
 {% block title %}Manage Users{% endblock %}
 {% block page_title %}Users{% endblock %}
-{% block breadcrumbs %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb jms-breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Users</li>
-  </ol>
-</nav>
-{% endblock %}
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h4 class="mb-0"><i class="bi bi-people text-primary"></i> All Users</h4>
+  <div></div>
   <a href="{% url 'accounts:user_create' %}" class="btn btn-primary"><i class="bi bi-person-plus"></i> Add User</a>
 </div>
 
@@ -32,7 +24,7 @@
       <tbody>
         {% for u in users %}
           <tr>
-            <td>{{ u.get_full_name|default:"-" }}{% if u.pk == request.user.pk %} <span class="badge bg-light text-dark border">You</span>{% endif %}</td>
+            <td>{{ u.get_full_name|default:"-" }}</td>
             <td>{{ u.username }}</td>
             <td>{{ u.email }}</td>
             <td>
@@ -54,18 +46,12 @@
               {% if u.profile %}
                 <a href="{% url 'accounts:user_role_update' u.pk %}" class="btn btn-sm btn-outline-primary" title="Change Role"><i class="bi bi-pencil-square"></i></a>
               {% endif %}
-              {% if u.pk == request.user.pk %}
-                <button type="button" class="btn btn-sm btn-outline-secondary" title="You can't deactivate your own account" disabled>
+              <form action="{% url 'accounts:user_toggle_active' u.pk %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-secondary" title="Activate / Deactivate">
                   <i class="bi bi-power"></i>
                 </button>
-              {% else %}
-                <form action="{% url 'accounts:user_toggle_active' u.pk %}" method="post" class="d-inline">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-outline-secondary" title="Activate / Deactivate">
-                    <i class="bi bi-power"></i>
-                  </button>
-                </form>
-              {% endif %}
+              </form>
             </td>
           </tr>
         {% empty %}

@@ -280,20 +280,3 @@ body > main {
   object-fit: cover;
   border-radius: var(--jms-border-radius) var(--jms-border-radius) 0 0;
 }
-
-/* ---------- Breadcrumbs ---------- */
-.jms-breadcrumb {
-  --bs-breadcrumb-divider: '/';
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-}
-.jms-breadcrumb .breadcrumb-item a {
-  color: var(--jms-primary);
-  text-decoration: none;
-}
-.jms-breadcrumb .breadcrumb-item a:hover {
-  text-decoration: underline;
-}
-.jms-breadcrumb .breadcrumb-item.active {
-  color: #6c757d;
-}

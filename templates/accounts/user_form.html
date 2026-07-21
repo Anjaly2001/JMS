@@ -1,15 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base_dashboard.html' %}
 {% block title %}Add User{% endblock %}
 {% block page_title %}Add User{% endblock %}
-{% block breadcrumbs %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb jms-breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'accounts:user_list' %}">Users</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Add User</li>
-  </ol>
-</nav>
-{% endblock %}
 {% block content %}
 <div class="jms-card p-4" style="max-width: 600px;">
   <h5 class="mb-3">Create Editor / Reviewer / Administrator Account</h5>

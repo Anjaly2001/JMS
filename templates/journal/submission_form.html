@@ -1,15 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base_dashboard.html' %}
 {% block title %}Submit Manuscript{% endblock %}
 {% block page_title %}Submit Manuscript{% endblock %}
-{% block breadcrumbs %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb jms-breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'journal:submission_list' %}">Manuscripts</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Submit Manuscript</li>
-  </ol>
-</nav>
-{% endblock %}
 {% block content %}
 <div class="jms-card p-4" style="max-width:750px;">
   <form method="post" enctype="multipart/form-data" novalidate>

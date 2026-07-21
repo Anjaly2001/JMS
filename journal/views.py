@@ -87,18 +87,9 @@ def article_detail(request, pk):
 # Journal CRUD (Administrator)
 # ---------------------------------------------------------------------------
 
-@user_passes_test(is_admin_or_editor, login_url='core:dashboard')
+@user_passes_test(is_admin, login_url='core:dashboard')
 def journal_manage_list(request):
-    """
-    Administrators see every journal; Editors only see the journals they
-    are assigned to (they can view/manage volumes and issues for those,
-    but the Add/Edit/Delete Journal actions stay Administrator-only, as
-    enforced in the template).
-    """
-    if is_admin(request.user):
-        journals = Journal.objects.all()
-    else:
-        journals = Journal.objects.filter(editor=request.user)
+    journals = Journal.objects.all()
     return render(request, 'journal/journal_manage_list.html', {'journals': journals})
 
 

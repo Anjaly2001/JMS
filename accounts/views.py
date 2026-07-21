@@ -70,17 +70,12 @@ def register(request):
 @login_required
 def profile(request):
     """Lets any logged-in user view/update their profile and change photo."""
-    profile_obj, created = Profile.objects.get_or_create(
-        user=request.user,
-        defaults={'role': Profile.ROLE_AUTHOR},
-    )
-
     user_form = UserUpdateForm(instance=request.user)
-    profile_form = ProfileUpdateForm(instance=profile_obj)
+    profile_form = ProfileUpdateForm(instance=request.user.profile)
 
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
-        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=profile_obj)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -125,47 +120,21 @@ def user_create(request):
 def user_role_update(request, pk):
     """Administrator: change a user's role."""
     target_profile = get_object_or_404(Profile, user_id=pk)
-
-    is_last_admin = (
-        target_profile.role == Profile.ROLE_ADMIN
-        and User.objects.filter(profile__role=Profile.ROLE_ADMIN, is_active=True).count() <= 1
-    )
-
     if request.method == 'POST':
         form = AdminUserRoleForm(request.POST, instance=target_profile)
         if form.is_valid():
-            if is_last_admin and form.cleaned_data['role'] != Profile.ROLE_ADMIN:
-                messages.error(request, 'At least one administrator account must remain. Promote another user first.')
-                return redirect('accounts:user_list')
             form.save()
             messages.success(request, f'Role updated for {target_profile.user.username}.')
             return redirect('accounts:user_list')
     else:
         form = AdminUserRoleForm(instance=target_profile)
-    return render(request, 'accounts/user_role_form.html', {
-        'form': form, 'target_user': target_profile.user, 'is_last_admin': is_last_admin,
-    })
+    return render(request, 'accounts/user_role_form.html', {'form': form, 'target_user': target_profile.user})
 
 
 @user_passes_test(is_admin, login_url='core:dashboard')
 def user_toggle_active(request, pk):
     """Administrator: activate/deactivate (lock) a user account."""
     target_user = get_object_or_404(User, pk=pk)
-
-    if target_user.pk == request.user.pk:
-        messages.error(request, 'You cannot deactivate your own account.')
-        return redirect('accounts:user_list')
-
-    is_last_active_admin = (
-        target_user.is_active
-        and hasattr(target_user, 'profile')
-        and target_user.profile.role == Profile.ROLE_ADMIN
-        and User.objects.filter(profile__role=Profile.ROLE_ADMIN, is_active=True).count() <= 1
-    )
-    if is_last_active_admin:
-        messages.error(request, 'At least one active administrator account must remain.')
-        return redirect('accounts:user_list')
-
     target_user.is_active = not target_user.is_active
     target_user.save(update_fields=['is_active'])
     state = 'activated' if target_user.is_active else 'deactivated'

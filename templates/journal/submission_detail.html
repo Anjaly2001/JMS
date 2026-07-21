@@ -1,16 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'base_dashboard.html' %}
 {% load core_extras %}
 {% block title %}{{ submission.title }}{% endblock %}
-{% block page_title %}{{ submission.submission_id }}{% endblock %}
-{% block breadcrumbs %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb jms-breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'journal:submission_list' %}">Manuscripts</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ submission.submission_id }}</li>
-  </ol>
-</nav>
-{% endblock %}
+{% block page_title %}{{ submission.title }}{% endblock %}
 {% block content %}
 
 <div class="jms-card p-4 mb-3">

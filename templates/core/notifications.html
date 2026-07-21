@@ -1,14 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base_dashboard.html' %}
 {% block title %}Notifications{% endblock %}
 {% block page_title %}Notifications{% endblock %}
-{% block breadcrumbs %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb jms-breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Notifications</li>
-  </ol>
-</nav>
-{% endblock %}
 {% block content %}
 <div class="jms-card p-3">
   {% for n in notifications %}

@@ -10,36 +10,6 @@ dashboards for Administrators, Editors, Reviewers, and Authors.
 
 ---
 
-## What's new in this revision
-
-- **Unified navigation shell.** Logged-in users now stay inside the
-  sidebar layout on every page, including the previously "public" pages
-  (Journals, Publications, Search, Home). Clicking **Publications** from
-  the sidebar no longer drops you into a different page layout.
-- **Breadcrumbs** added throughout (e.g. `Dashboard > Manuscripts >
-  SUB-2026-00001`), so deep pages always show how you got there and how
-  to get back.
-- **Consistent headings** restored on pages that had gone blank
-  (Users, Journals, Manuscripts, Reports, Journal detail).
-- **No more duplicate chrome**: the sidebar layout has no footer (the
-  sidebar already ends in Logout); the public layout's footer carries a
-  Logout button as a fallback for any page reached without a sidebar.
-- **Security fix**: the self-service Profile page could previously edit
-  your own `role` field, meaning any Author or Reviewer could grant
-  themselves Administrator access. Role is now **only** changeable by an
-  Administrator, via Users management.
-- **Admin lockout protection**: an Administrator can no longer deactivate
-  their own account, or change the role of the last remaining
-  Administrator - the UI disables the action and shows why.
-- **Fixed a broken Editor link**: the sidebar's "Journals" link for
-  Editors pointed at an Administrator-only page; Editors can now view
-  their own assigned journals (Admin-only actions like Add/Delete
-  Journal remain hidden for them).
-- Removed leftover, unused scaffolding (stray empty Django apps and a
-  duplicate project folder) that had accumulated in the repo.
-
----
-
 ## 1. Features
 
 - **Authentication**: login, registration (Author role), logout, forgot
@@ -86,7 +56,7 @@ JournalManagementSystem/
 ├── accounts/           # Login, registration, profile, roles, user management
 ├── journal/            # Journals, volumes, issues, submissions, reviews
 ├── core/                # Home page, dashboards, search, reports, notifications
-├── templates/           # base.html (unified shell), includes/, app templates
+├── templates/           # base_public.html, base_dashboard.html, includes/, app templates
 ├── static/css/          # Custom Blue & White theme
 ├── media/                # Uploaded manuscripts, cover images, profile photos
 ├── requirements.txt
@@ -193,14 +163,6 @@ notification bell / center for the relevant user.
 - CSRF protection is enabled via Django's default middleware.
 - Role-based authorization is enforced with `@login_required` and
   `@user_passes_test` decorators on every protected view.
-- **Role changes are Administrator-only.** A logged-in user's own
-  Profile page cannot edit their role; only the Users management page
-  (`/accounts/users/`) can promote or demote an account. An
-  Administrator also can't deactivate their own account or demote the
-  last remaining Administrator, to avoid locking everyone out.
-- A dedicated `/accounts/admin-login/` page exists for Administrator
-  sign-in; it rejects non-administrator credentials even if they're
-  otherwise valid.
 - Passwords are hashed using Django's default password hashers.
 - Manuscript and image uploads are validated by file extension and size
   (see `journal/models.py` and `settings.py`).
