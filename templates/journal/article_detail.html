@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block page_title %}{{ article.title }}{% endblock %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb jms-breadcrumb">
+    {% if user.is_authenticated %}<li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>{% else %}<li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>{% endif %}
+    <li class="breadcrumb-item"><a href="{% url 'journal:publication_list' %}">Publications</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ article.title }}</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="jms-card p-4">
+  <h2>{{ article.title }}</h2>
+  <p class="text-muted">
+    Published in <a href="{% url 'journal:journal_detail' article.journal.pk %}">{{ article.journal.title }}</a>
+    &middot; {{ article.submission_date|date:"d M Y" }}
+  </p>
+  <p class="mb-1"><strong>Author(s):</strong> {{ article.corresponding_author.get_full_name|default:article.corresponding_author.username }}{% if article.co_authors %}, {{ article.co_authors }}{% endif %}</p>
+  <p class="mb-1"><strong>Subject Area:</strong> {{ article.subject_area }}</p>
+  <p class="mb-3">
+    <strong>Keywords:</strong>
+    {% for kw in article.keyword_list %}<span class="badge bg-light text-dark border me-1">{{ kw }}</span>{% endfor %}
+  </p>
+  <h5>Abstract</h5>
+  <p>{{ article.abstract }}</p>
+  <a href="{{ article.manuscript_file.url }}" class="btn btn-primary"><i class="bi bi-download"></i> Download PDF</a>
+</div>
+{% endblock %}

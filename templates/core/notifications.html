@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Notifications{% endblock %}
+{% block page_title %}Notifications{% endblock %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb jms-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Notifications</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="jms-card p-3">
+  {% for n in notifications %}
+    <div class="d-flex align-items-start border-bottom py-2 {% if not n.is_read %}bg-light{% endif %}">
+      <i class="bi bi-bell text-primary me-3 mt-1"></i>
+      <div class="flex-grow-1">
+        <div>{{ n.message }}</div>
+        <small class="text-muted">{{ n.get_category_display }} &middot; {{ n.created_at|timesince }} ago</small>
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-muted text-center mb-0">You have no notifications yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

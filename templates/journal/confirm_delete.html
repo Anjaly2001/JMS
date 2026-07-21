@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Confirm Delete{% endblock %}
+{% block page_title %}Confirm Delete{% endblock %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb jms-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'journal:journal_manage_list' %}">Journals</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Confirm Delete</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width:500px;">
+  <p>Are you sure you want to delete the {{ type_label }} "<strong>{{ object }}</strong>"? This cannot be undone.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</button>
+    <a href="{% url 'journal:journal_manage_list' %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

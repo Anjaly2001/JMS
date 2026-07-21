@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load core_extras %}
+{% block title %}Author Dashboard{% endblock %}
+{% block page_title %}Author Dashboard{% endblock %}
+{% block content %}
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md">
+    <div class="jms-card jms-stat-card p-3 text-center">
+      <div class="display-6">{{ my_submissions_count }}</div>
+      <div class="text-muted small">My Submissions</div>
+    </div>
+  </div>
+  <div class="col-6 col-md">
+    <div class="jms-card jms-stat-card p-3 text-center">
+      <div class="display-6">{{ under_review }}</div>
+      <div class="text-muted small">Under Review</div>
+    </div>
+  </div>
+  <div class="col-6 col-md">
+    <div class="jms-card jms-stat-card p-3 text-center">
+      <div class="display-6">{{ accepted }}</div>
+      <div class="text-muted small">Accepted</div>
+    </div>
+  </div>
+  <div class="col-6 col-md">
+    <div class="jms-card jms-stat-card p-3 text-center">
+      <div class="display-6">{{ revision_requested }}</div>
+      <div class="text-muted small">Revision Requested</div>
+    </div>
+  </div>
+  <div class="col-6 col-md">
+    <div class="jms-card jms-stat-card p-3 text-center">
+      <div class="display-6">{{ published }}</div>
+      <div class="text-muted small">Published</div>
+    </div>
+  </div>
+</div>
+
+<div class="mb-4">
+  <a href="{% url 'journal:submission_create' %}" class="btn btn-primary btn-lg"><i class="bi bi-file-earmark-plus"></i> Submit New Manuscript</a>
+</div>
+
+<div class="jms-card p-3">
+  <h5 class="mb-3">My Submissions</h5>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead><tr><th>ID</th><th>Title</th><th>Journal</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        {% for s in submissions %}
+          <tr>
+            <td>{{ s.submission_id }}</td>
+            <td>{{ s.title|truncatechars:45 }}</td>
+            <td>{{ s.journal.title }}</td>
+            <td><span class="badge bg-{{ s.status|status_badge }}">{{ s.get_status_display }}</span></td>
+            <td><a href="{% url 'journal:submission_detail' s.pk %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i> Track Status</a></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5" class="text-center text-muted">You haven't submitted any manuscripts yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

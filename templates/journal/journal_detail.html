@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}{{ journal.title }}{% endblock %}
+{% block page_title %}{{ journal.title }}{% endblock %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb jms-breadcrumb">
+    {% if user.is_authenticated %}<li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>{% else %}<li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>{% endif %}
+    <li class="breadcrumb-item"><a href="{% url 'journal:journal_list' %}">Journals</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ journal.title }}</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="journal-header rounded-4 overflow-hidden mb-5 shadow-sm">
+  <div class="row g-0">
+    <div class="col-md-4 journal-header-image">
+      {% if journal.cover_image %}
+        <img src="{{ journal.cover_image.url }}" class="w-100 h-100 object-fit-cover" alt="{{ journal.title }}">
+      {% else %}
+        <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light">
+          <i class="bi bi-journal-bookmark text-primary" style="font-size:5rem;"></i>
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-md-8 p-4 bg-white">
+      <div class="d-flex align-items-start justify-content-between flex-column h-100">
+        <div>
+          <h1 class="display-6 fw-bold mb-3">{{ journal.title }}</h1>
+          <p class="text-muted mb-4">{% if journal.description %}{{ journal.description }}{% else %}A journal overview is not yet available. Please check back later for more information.{% endif %}</p>
+          {% if journal.categories.all %}
+            <p class="mb-2">
+              {% for cat in journal.categories.all %}
+                <span class="badge bg-secondary me-1">{{ cat.name }}</span>
+              {% endfor %}
+            </p>
+          {% endif %}
+        </div>
+        <div class="row text-muted small gy-2">
+          {% if journal.issn %}
+            <div class="col-sm-6 col-lg-4"><strong class="text-dark">ISSN</strong><br>{{ journal.issn }}</div>
+          {% endif %}
+          <div class="col-sm-6 col-lg-4"><strong class="text-dark">Volumes</strong><br>{{ journal.volumes.count }}</div>
+          <div class="col-sm-6 col-lg-4"><strong class="text-dark">Published Articles</strong><br>{{ published_articles|length }}</div>
+          {% if journal.editor %}
+            <div class="col-sm-6 col-lg-4"><strong class="text-dark">Editor</strong><br>{{ journal.editor.get_full_name|default:journal.editor.username }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row gy-4">
+  <div class="col-lg-7">
+    <section class="mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Volumes & Issues</h4>
+        <a href="{% url 'journal:journal_list' %}" class="btn btn-sm btn-outline-primary">Back to Journals</a>
+      </div>
+      {% if volumes %}
+        <div class="row g-3">
+          {% for volume in volumes %}
+            <div class="col-md-6">
+              <article class="jms-card journal-volume-card h-100 p-3">
+                <h5 class="h6 mb-2">Volume {{ volume.number }} <span class="text-muted">({{ volume.year }})</span></h5>
+                <ul class="list-unstyled mb-0">
+                  {% for issue in volume.issues.all %}
+                    <li class="mb-2">
+                      <span class="badge bg-secondary me-2">Issue {{ issue.issue_number }}</span>
+                      {% if issue.publish_date %}<small class="text-muted">{{ issue.publish_date|date:"d M Y" }}</small>{% endif %}
+                      {% if issue.is_published %}<span class="badge bg-success ms-2">Published</span>{% endif %}
+                    </li>
+                  {% empty %}
+                    <li class="text-muted">No issues yet.</li>
+                  {% endfor %}
+                </ul>
+              </article>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="jms-card p-4 text-muted">No volumes published yet.</div>
+      {% endif %}
+    </section>
+  </div>
+
+  <div class="col-lg-5">
+    <section>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Published Articles</h4>
+        <span class="badge bg-primary">{{ published_articles|length }}</span>
+      </div>
+      {% if published_articles %}
+        <div class="list-group">
+          {% for article in published_articles %}
+            <a href="{% url 'journal:article_detail' article.pk %}" class="list-group-item list-group-item-action journal-article-card">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6 class="mb-1">{{ article.title }}</h6>
+                  <small class="text-muted">{{ article.corresponding_author.get_full_name|default:article.corresponding_author.username }}</small>
+                </div>
+                <small class="text-muted">{{ article.submission_date|date:"d M Y" }}</small>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="jms-card p-4 text-muted">No articles published in this journal yet.</div>
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}

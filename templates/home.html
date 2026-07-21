@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="jms-hero text-center mb-5">
+  <h1 class="display-5 fw-bold">Journal Management System</h1>
+  <p class="lead">A single home for journal publishing, manuscript submission, peer review, and open access to published research.</p>
+  <a href="{% url 'accounts:register' %}" class="btn btn-light btn-lg mt-2"><i class="bi bi-person-plus"></i> Get Started</a>
+</div>
+
+<section id="about" class="mb-5">
+  <div class="row align-items-center">
+    <div class="col-md-8">
+      <h2 class="mb-3">About the Journal Management System</h2>
+      <p>
+        JMS supports the full editorial lifecycle for academic journals published by the
+        institution &mdash; from manuscript submission and peer review to editorial decisions
+        and open publication. Authors can track their submissions, Reviewers can manage
+        invitations, Editors can run the review workflow, and Administrators can oversee
+        the whole system.
+      </p>
+    </div>
+    <div class="col-md-4 text-center">
+      <i class="bi bi-mortarboard text-primary" style="font-size: 6rem;"></i>
+    </div>
+  </div>
+</section>
+
+<section class="jms-featured-section mb-5">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3 gap-3">
+    <div>
+      <h2 class="mb-1">Featured Journals</h2>
+      <p class="text-muted mb-0">Browse selected journals published through the system and access their latest volumes and editorial content.</p>
+    </div>
+    <a href="{% url 'journal:journal_list' %}" class="btn btn-sm btn-outline-primary">View All Journals</a>
+  </div>
+  <div class="row g-4">
+    {% for journal in featured_journals %}
+      <div class="col-sm-6 col-lg-4">
+        <article class="jms-card featured-journal-card h-100 overflow-hidden">
+          <div class="featured-journal-image position-relative">
+            {% if journal.cover_image %}
+              <img src="{{ journal.cover_image.url }}" class="w-100 h-100 object-fit-cover" alt="{{ journal.title }}">
+            {% else %}
+              <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light">
+                <i class="bi bi-journal-bookmark text-primary" style="font-size: 3rem;"></i>
+              </div>
+            {% endif %}
+            <span class="badge bg-primary position-absolute top-0 end-0 m-3">Journal</span>
+          </div>
+          <div class="p-4 featured-journal-body">
+            <h5 class="mb-2"><a href="{% url 'journal:journal_detail' journal.pk %}" class="text-dark text-decoration-none stretched-link">{{ journal.title }}</a></h5>
+            <p class="text-muted small mb-3">{{ journal.description|truncatewords:20 }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-primary small fw-semibold">Read details</span>
+              <i class="bi bi-arrow-right-circle text-primary fs-5"></i>
+            </div>
+          </div>
+        </article>
+      </div>
+    {% empty %}
+      <p class="text-muted">No journals published yet.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="mb-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Latest Published Articles</h2>
+    <a href="{% url 'journal:publication_list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+  </div>
+  <div class="list-group">
+    {% for article in latest_articles %}
+      <a href="{% url 'journal:article_detail' article.pk %}" class="list-group-item list-group-item-action">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h6 class="mb-1">{{ article.title }}</h6>
+            <small class="text-muted">{{ article.journal.title }} &middot; {{ article.corresponding_author.get_full_name|default:article.corresponding_author.username }}</small>
+          </div>
+          <small class="text-muted">{{ article.submission_date|date:"d M Y" }}</small>
+        </div>
+      </a>
+    {% empty %}
+      <p class="text-muted">No articles published yet.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section id="contact" class="jms-card p-4">
+  <h2 class="mb-3">Contact</h2>
+  <p class="mb-1"><i class="bi bi-envelope me-2"></i> journals@university.edu</p>
+  <p class="mb-1"><i class="bi bi-telephone me-2"></i> +91-00000-00000</p>
+  <p class="mb-0"><i class="bi bi-geo-alt me-2"></i> Academic Institution, Bengaluru, India</p>
+</section>
+{% endblock %}

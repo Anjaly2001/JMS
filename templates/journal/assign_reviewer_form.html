@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Assign Reviewer{% endblock %}
+{% block page_title %}Assign Reviewer{% endblock %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb jms-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'journal:submission_list' %}">Manuscripts</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'journal:submission_detail' submission.pk %}">{{ submission.submission_id }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Assign Reviewer</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width:600px;">
+  <p class="text-muted">Submission: {{ submission.title }} ({{ submission.submission_id }})</p>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Reviewer</label>
+      {{ form.reviewer }}
+      {{ form.reviewer.errors }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Due Date</label>
+      {{ form.due_date }}
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-person-plus"></i> Send Invitation</button>
+    <a href="{% url 'journal:submission_detail' submission.pk %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

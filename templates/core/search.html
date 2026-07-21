@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock %}
+{% block page_title %}Search Results{% endblock %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb jms-breadcrumb">
+    {% if user.is_authenticated %}<li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>{% else %}<li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>{% endif %}
+    <li class="breadcrumb-item active" aria-current="page">Search Results</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<h3 class="mb-4"><i class="bi bi-search text-primary"></i> Search Results {% if query %}for "{{ query }}"{% endif %}</h3>
+
+<form class="d-flex mb-4" role="search" method="get">
+  <input class="form-control me-2" type="search" name="q" placeholder="Search journals, articles, authors" value="{{ query }}">
+  <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Search</button>
+</form>
+
+{% if query %}
+  <div class="mb-4">
+    <h5>Journals ({{ journals|length }})</h5>
+    {% for j in journals %}
+      <a href="{% url 'journal:journal_detail' j.pk %}" class="list-group-item list-group-item-action">{{ j.title }}</a>
+    {% empty %}
+      <p class="text-muted">No matching journals.</p>
+    {% endfor %}
+  </div>
+
+  <div class="mb-4">
+    <h5>Articles ({{ articles|length }})</h5>
+    {% for a in articles %}
+      <a href="{% url 'journal:article_detail' a.pk %}" class="list-group-item list-group-item-action">
+        {{ a.title }} <small class="text-muted">&middot; {{ a.journal.title }}</small>
+      </a>
+    {% empty %}
+      <p class="text-muted">No matching articles.</p>
+    {% endfor %}
+  </div>
+
+  <div class="mb-4">
+    <h5>Authors ({{ authors|length }})</h5>
+    {% for au in authors %}
+      <div class="list-group-item">{{ au.get_full_name|default:au.username }}</div>
+    {% empty %}
+      <p class="text-muted">No matching authors.</p>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="text-muted">Enter a search term to find journals, articles, and authors.</p>
+{% endif %}
+{% endblock %}

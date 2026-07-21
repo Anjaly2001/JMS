@@ -1,0 +1,81 @@
+<nav class="jms-sidebar d-flex flex-column">
+  <div class="jms-sidebar-brand d-flex align-items-center">
+    <i class="bi bi-journal-bookmark-fill fs-4 me-2"></i>
+    <span>JMS</span>
+  </div>
+
+  {% with request.resolver_match.url_name as current_url %}
+  <ul class="nav flex-column mt-2 flex-grow-1">
+    <li class="nav-item">
+      <a class="nav-link {% if current_url == 'dashboard_admin' or current_url == 'dashboard_editor' or current_url == 'dashboard_reviewer' or current_url == 'dashboard_author' or current_url == 'dashboard' %}active{% endif %}" href="{% url 'core:dashboard' %}">
+        <i class="bi bi-speedometer2"></i> Dashboard
+      </a>
+    </li>
+
+    {% if current_role == 'admin' %}
+      <li class="nav-item">
+        <a class="nav-link {% if current_url == 'user_list' or current_url == 'user_create' or current_url == 'user_role_update' %}active{% endif %}" href="{% url 'accounts:user_list' %}"><i class="bi bi-people"></i> Users</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if current_url == 'journal_manage_list' or current_url == 'journal_manage_detail' or current_url == 'journal_create' or current_url == 'journal_update' or current_url == 'journal_delete' or current_url == 'volume_create' or current_url == 'issue_create' %}active{% endif %}" href="{% url 'journal:journal_manage_list' %}"><i class="bi bi-journal-bookmark"></i> Journals</a>
+      </li>
+    {% elif current_role == 'editor' %}
+      <li class="nav-item">
+        <a class="nav-link {% if current_url == 'journal_list' or current_url == 'journal_detail' %}active{% endif %}" href="{% url 'journal:journal_list' %}"><i class="bi bi-journal-bookmark"></i> Journals</a>
+      </li>
+    {% else %}
+      <li class="nav-item">
+        <a class="nav-link {% if current_url == 'journal_list' or current_url == 'journal_detail' %}active{% endif %}" href="{% url 'journal:journal_list' %}"><i class="bi bi-journal-bookmark"></i> Journals</a>
+      </li>
+    {% endif %}
+
+    <li class="nav-item">
+      <a class="nav-link {% if current_url == 'submission_list' or current_url == 'submission_detail' or current_url == 'review_submit' or current_url == 'review_download_manuscript' or current_url == 'review_respond' or current_url == 'assign_reviewer' or current_url == 'editorial_decision' or current_url == 'publish_submission' %}active{% endif %}" href="{% url 'journal:submission_list' %}"><i class="bi bi-file-earmark-text"></i> Manuscripts</a>
+    </li>
+
+    {% if current_role == 'author' %}
+      <li class="nav-item">
+        <a class="nav-link {% if current_url == 'submission_create' %}active{% endif %}" href="{% url 'journal:submission_create' %}"><i class="bi bi-file-earmark-plus"></i> Submit Manuscript</a>
+      </li>
+    {% endif %}
+
+    {% if current_role == 'reviewer' %}
+      <li class="nav-item">
+        <a class="nav-link {% if current_url == 'dashboard_reviewer' %}active{% endif %}" href="{% url 'core:dashboard_reviewer' %}"><i class="bi bi-pencil-square"></i> My Reviews</a>
+      </li>
+    {% endif %}
+
+    <li class="nav-item">
+      <a class="nav-link {% if current_url == 'publication_list' or current_url == 'article_detail' %}active{% endif %}" href="{% url 'journal:publication_list' %}"><i class="bi bi-book"></i> Publications</a>
+    </li>
+
+    {% if current_role == 'admin' %}
+      <li class="nav-item">
+        <a class="nav-link {% if current_url == 'reports' %}active{% endif %}" href="{% url 'core:reports' %}"><i class="bi bi-bar-chart"></i> Reports</a>
+      </li>
+    {% endif %}
+
+    <li class="nav-item">
+      <a class="nav-link {% if current_url == 'notifications' %}active{% endif %}" href="{% url 'core:notifications' %}">
+        <i class="bi bi-bell"></i> Notifications
+        {% if unread_notifications %}<span class="badge bg-danger ms-1">{{ unread_notifications }}</span>{% endif %}
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link {% if current_url == 'profile' %}active{% endif %}" href="{% url 'accounts:profile' %}"><i class="bi bi-person-circle"></i> Profile</a>
+    </li>
+  </ul>
+{% endwith %}
+
+  <ul class="nav flex-column mb-2">
+    <li class="nav-item">
+      <form action="{% url 'accounts:logout' %}" method="post" class="px-2">
+        {% csrf_token %}
+        <button type="submit" class="nav-link border-0 bg-transparent w-100 text-start">
+          <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+      </form>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Change Role{% endblock %}
+{% block page_title %}Change Role{% endblock %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb jms-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'accounts:user_list' %}">Users</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Change Role</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width: 500px;">
+  <h5 class="mb-3">Change Role for {{ target_user.username }}</h5>
+  {% if is_last_admin %}
+    <div class="alert alert-warning small">
+      <i class="bi bi-exclamation-triangle"></i>
+      {{ target_user.username }} is the only active Administrator. To keep the system manageable,
+      you can't change this role away from Administrator until another user is promoted.
+    </div>
+  {% endif %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Role</label>
+      {{ form.role }}
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Update Role</button>
+    <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

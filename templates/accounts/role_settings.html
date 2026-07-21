@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Role Settings{% endblock %}
+{% block page_title %}Role Settings{% endblock %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb jms-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'accounts:user_list' %}">Users</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Role Settings</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0"><i class="bi bi-person-gear text-primary"></i> Role Settings</h4>
+  <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to Users</a>
+</div>
+
+<div class="jms-card p-3">
+  <p class="text-muted mb-3">Manage user roles from one place.</p>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Current Role</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+          <tr>
+            <td>{{ u.get_full_name|default:u.username }}</td>
+            <td>
+              {% if u.profile %}
+                <span class="badge bg-primary">{{ u.profile.get_role_display }}</span>
+              {% else %}
+                <span class="badge bg-secondary">No Profile</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if u.profile %}
+                <a href="{% url 'accounts:user_role_update' u.pk %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil-square"></i> Change Role</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="3" class="text-center text-muted">No users found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

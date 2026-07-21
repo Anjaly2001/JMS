@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block page_title %}Login{% endblock %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb jms-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Login</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="jms-card p-4">
+      <h3 class="mb-3 text-center"><i class="bi bi-box-arrow-in-right text-primary"></i> Login</h3>
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+        <div class="mb-3">
+          <label class="form-label">Username <span class="text-danger">*</span></label>
+          {{ form.username.errors }}
+          <input type="text" name="username" class="form-control" required autofocus>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password <span class="text-danger">*</span></label>
+          {{ form.password.errors }}
+          <input type="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+      </form>
+      <div class="d-flex justify-content-between mt-3">
+        <a href="{% url 'accounts:password_reset' %}" class="small">Forgot password?</a>
+        <a href="{% url 'accounts:register' %}" class="small">Create an account</a>
+      </div>
+      <div class="text-center mt-3">
+        <a href="{% url 'accounts:admin_login' %}" class="btn btn-outline-primary btn-sm"><i class="bi bi-shield-lock"></i> Admin Login</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

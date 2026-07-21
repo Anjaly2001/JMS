@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load core_extras %}
+{% block title %}Reports{% endblock %}
+{% block page_title %}Reports{% endblock %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb jms-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Reports</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0"><i class="bi bi-bar-chart text-primary"></i> Reports</h4>
+  <a href="{% url 'core:export_submissions_csv' %}" class="btn btn-outline-primary"><i class="bi bi-download"></i> Export Submissions (Excel/CSV)</a>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="jms-card p-3 text-center">
+      <div class="display-6">{{ total_decided }}</div>
+      <div class="text-muted small">Decisions Recorded</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="jms-card p-3 text-center">
+      <div class="display-6">{{ total_accepted }}</div>
+      <div class="text-muted small">Accepted / Published</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="jms-card p-3 text-center">
+      <div class="display-6">{{ acceptance_rate }}%</div>
+      <div class="text-muted small">Acceptance Rate</div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="jms-card p-3">
+      <h6>Submission Report</h6>
+      <table class="table table-sm">
+        {% for row in submission_status_counts %}
+          <tr>
+            <td><span class="badge bg-{{ row.status|status_badge }}">{{ row.status }}</span></td>
+            <td class="text-end">{{ row.total }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="jms-card p-3">
+      <h6>Journal Report</h6>
+      <table class="table table-sm">
+        {% for j in journal_report %}
+          <tr>
+            <td>{{ j.title|truncatechars:22 }}</td>
+            <td class="text-end">{{ j.submission_count }}</td>
+          </tr>
+        {% empty %}
+          <tr><td class="text-muted">No journals yet.</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="jms-card p-3">
+      <h6>Reviewer Report</h6>
+      <table class="table table-sm">
+        {% for r in reviewer_report %}
+          <tr>
+            <td>{{ r.get_full_name|default:r.username }}</td>
+            <td class="text-end">{{ r.review_count }}</td>
+          </tr>
+        {% empty %}
+          <tr><td class="text-muted">No reviewers yet.</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

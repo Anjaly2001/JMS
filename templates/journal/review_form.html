@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Submit Review{% endblock %}
+{% block page_title %}Submit Review{% endblock %}
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb jms-breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'core:dashboard' %}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'journal:submission_list' %}">Manuscripts</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Submit Review</li>
+  </ol>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="jms-card p-4" style="max-width:700px;">
+  <p class="text-muted">Manuscript: {{ review.submission.title }} ({{ review.submission.submission_id }})</p>
+  <a href="{% url 'journal:review_download_manuscript' review.pk %}" class="btn btn-outline-secondary btn-sm mb-3"><i class="bi bi-download"></i> Download Manuscript</a>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Recommendation <span class="text-danger">*</span></label>
+      {{ form.recommendation }}
+      {{ form.recommendation.errors }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Comments to Author</label>
+      {{ form.comments_to_author }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Confidential Comments (visible to Editors only)</label>
+      {{ form.confidential_comments }}
+    </div>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> Submit Review</button>
+  </form>
+</div>
+{% endblock %}
